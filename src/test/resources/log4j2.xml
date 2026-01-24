@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bind to grammar/schema -->
+
+<Configuration status="WARN">
+    <Properties>
+        <!-- mentioned folder name logs -->
+        <Property name="basePath">./logs</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- generate logs on console -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- generate logs on file ${basePath} is a folder which will contain automation.log
+             and create files with date and time -->
+        <RollingFile name="File"
+                     fileName="${basePath}/automation.log"
+                     filePattern="${basePath}/automation-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                BasedTriggerPolicy: rotate file when size exceeds 5 MB -->
+                <SizeBasedTriggerPolicy size="5 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Root level="info" tells which types of logs to include:
+             ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
+        <Root level="Debug">
+            <!-- For console use <AppenderRef ref="Console"/>
+                 For file use <AppenderRef ref="File"/> -->
+<!--            <AppenderRef ref="Console"/>-->
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
